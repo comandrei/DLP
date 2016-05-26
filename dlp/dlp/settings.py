@@ -103,9 +103,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 import sys
-_settings = '/home/labs/etc/'
+_settings = '/home/aclabs/etc/'
 sys.path.insert(0, _settings)
 try:
-    from settins_ops import *
+    from settings_ops import *
 except ImportError:
     pass
