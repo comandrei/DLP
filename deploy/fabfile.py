@@ -22,6 +22,7 @@ def deploy():
     run("cd DLP; git pull")
     run("deployed/bin/pip install -r DLP/dlp/requirements.txt")
     run("deployed/bin/python DLP/dlp/manage.py migrate")
+    run("deployed/bin/python DLP/dlp/manage.py collectstatic --noinput")
     run("sudo systemctl restart gunicorn")
 
 def first_deploy():
