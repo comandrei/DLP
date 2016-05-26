@@ -1,0 +1,12 @@
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=sammy
+Group=www-data
+WorkingDirectory=/home/aclabs/DLP/dlp
+ExecStart=/home/aclabs/deployed/bin/gunicorn --workers 4 --bind unix:/home/aclabs/dlp.sock dlp.wsgi:application
+
+[Install]
+WantedBy=multi-user.target

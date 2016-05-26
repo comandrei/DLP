@@ -11,17 +11,18 @@ def provision():
     run("sudo apt-get install {} --assume-yes".format(" ".join(deps)))
 
 def configure():
-    put("nginx.conf", "/tmp/dlp.nginx.conf")
-    put("gunicorn.conf", "/tmp/gunicorn.conf")
-    run("sudo mv /tmp/gunicorn.conf /etc/init/gunicorn.conf")
+    put("dlp.nginx.conf", "/tmp/dlp.nginx.conf")
+    put("gunicorn.service", "/tmp/gunicorn.service")
+    run("sudo mv /tmp/gunicorn.service /etc/systemd/system/gunicorn.service")
     run("sudo mv /tmp/dlp.nginx.conf /etc/nginx/sites-enabled/dlp.conf")
     run("sudo service nginx restart")
+    run("sudo systemctl enable gunicorn")
 
 def deploy():
     run("cd DLP; git pull")
     run("deployed/bin/pip install -r DLP/dlp/requirements.txt")
     run("deployed/bin/python DLP/dlp/manage.py migrate")
-    run("sudo service gunicorn restart")
+    run("sudo systemctl restart gunicorn")
 
 def first_deploy():
     run("rm -rf deployed")
